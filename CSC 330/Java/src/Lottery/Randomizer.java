@@ -1,51 +1,77 @@
-/*
- * Title: 		Randomizer
- * Author:		Lasha Zakariashvili
- * 
- * Description: A class which generates random numbers or random array of numbers.
- * 
- * Usage: 		generateNumber(from, to)  		//from and to could be either int or double
- * 				generateArray(from, to, size)	//from and to could be either int or double
- * 				sort(array[])					//sorts the array[] from least to greatest
- */
-
 package Lottery;
 
-import java.util.Arrays;
+import java.util.*;
+import java.math.*;
 
+/**
+ * Useful utility class around Random Number Generation ... uses the Math.random() 
+ * common library Class/method. 
+ */
 public class Randomizer {
-	//----Class-Specific Functions----
+	
+	/**
+     * Return a random integer between low & high 
+     */
+    public int generateInt(int low, int high) {
+        return ( (int) ( (Math.random() * 1000000000 )  % (high - low) )  + low );
+    }
+    public int generateInt(double low, double high) {
+        return generateInt((int) low, (int) high);
+    }
+	
+    /*
+     * return some random decimal number
+     */
+    public double generateDecimal() {
+        return Math.random() * 1000000000; 
+    }
+    
+    public int generateInt() {
+        return ( (int) generateDecimal() );
+    }
+	
+
 	public Randomizer() {
+		init(); 
 	}
-	public static double generateNumber() {	//useless function, kept it to make the prof happy :P
-		return Math.random();	
+	
+	private void init() {
+		// stubbed out for future use - to initialize the state of a Randomizer Instance 
 	}
-	public static int generateNumber(int low, int high) {
-		return (int) ((Math.random() * (high-low)) + low);
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
+		// new instance of Randomizer 
+		Randomizer randomizer = new Randomizer(); 
+		
+		// Test some of the key methods provided 
+		System.out.println(randomizer.generateDecimal());
+		System.out.println(randomizer.generateInt());
+		
+		
+		int from = 11;
+		int to = 20; 
+		Integer number = randomizer.generateInt(from, to); 
+		System.out.printf("Number between %d and %d:  %d\n", from, to, number); 
+		
+		int intCount = 10; 
+
+		int [] integers = new int[intCount]; 
+		
+		for(int i = 0 ; i < intCount ; ++i) {
+			integers[i] = randomizer.generateInt(1, 1000);
+		}
+		
+		Arrays.sort(integers);
+		
+		for(int i = 0 ; i < intCount ; ++i) {
+			System.out.printf("[%d] = %d\n",  i,  integers[i] );
+		}
+
 	}
-	public static double generateNumber(double low, double high) {
-		return ((Math.random() * (high-low)) + low);
-	}
-	public static int[] generateArray(int low, int high, int size, boolean sorted) {
-		int array[] = new int[size];
-		for (int i=0; i<size; i++)
-			array[i] = generateNumber(low, high);
-		if (sorted == true)
-			sort(array);
-		return array;
-	}
-	public static double[] generateArray(double low, double high, int size, boolean sorted) {
-		double array[] = new double[size];
-		for (int i=0; i<size; i++)
-			array[i] = generateNumber(low, high);
-		if (sorted == true)
-			sort(array);
-		return array;
-	}
-	public static void sort(int[] array) {
-		Arrays.sort(array);
-	}
-	public static void sort(double[] array) {
-		Arrays.sort(array);
-	}
+
 }
+
